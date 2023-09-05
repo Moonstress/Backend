@@ -1,0 +1,29 @@
+# Get all products
+GET http://localhost:8080/products
+
+# Get a product by code (replace :code with an actual product code)
+GET http://localhost:8080/products/:code
+
+# Create a new product
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "code": "P3",
+  "thumbnail": "thumbnail_url_3",
+  "title": "Product 3",
+  "descripcion": "Description of Product 3",
+  "price": 15.99,
+  "stock": 40
+}
+
+# Update a product by code (replace :code with an actual product code)
+PUT http://localhost:8080/products/:code
+Content-Type: application/json
+
+{
+  "price": 14.99
+}
+
+# Delete a product by code (replace :code with an actual product code)
+DELETE http://localhost:8080/products/:code
