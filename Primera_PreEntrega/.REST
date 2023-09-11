@@ -1,0 +1,56 @@
+# List All Products
+GET http://localhost:8080/api/products
+###
+# Get Product by ID (Replace :pid with a valid product ID)
+GET http://localhost:8080/api/products/:pid
+###
+# Add New Product
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "title": "Glow-in-the-Dark Pacifier",
+  "description": "A pacifier that glows in the dark, perfect for soothing babies at night.",
+  "code": "PACI003",
+  "price": 9.99,
+  "status": true,
+  "stock": 30,
+  "category": "Pacifiers",
+  "thumbnails": [
+    "images/paci003_1.jpg",
+    "images/paci003_2.jpg"
+  ]
+}
+###
+# Update Product by ID (Replace :pid with a valid product ID)
+PUT http://localhost:8080/api/products/:pid
+Content-Type: application/json
+
+{
+  "title": "Updated Product",
+  "price": 29.99
+}
+###
+# Delete Product by ID (Replace :pid with a valid product ID)
+DELETE http://localhost:8080/api/products/:pid
+###
+# Create New Cart
+POST http://localhost:8080/api/carts
+Content-Type: application/json
+
+{
+  "products": []
+}
+###
+# List Products in a Cart (Replace :cid with a valid cart ID)
+GET http://localhost:8080/api/carts/:cid
+
+###
+# Add Product to Cart (Replace :cid and :pid with valid cart and product IDs)
+POST http://localhost:8080/api/carts/:cid/product/:pid
+Content-Type: application/json
+
+{
+  "product": 1,
+  "quantity": 2
+}

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "1",
+    "title": "Soft Plush Teddy Bear",
+    "description": "A cuddly teddy bear plushie for comfort and relaxation.",
+    "code": "PLUSH001",
+    "price": 15.99,
+    "status": true,
+    "stock": 50,
+    "category": "Plushies",
+    "thumbnails": [
+      "images/plush001_1.jpg",
+      "images/plush001_2.jpg"
+    ]
+  },
+  {
+    "id": "2",
+    "title": "Sensory Fidget Spinner",
+    "description": "A fidget spinner toy for sensory stimulation and relaxation.",
+    "code": "FIDGET001",
+    "price": 9.99,
+    "status": true,
+    "stock": 100,
+    "category": "Fidget Toys",
+    "thumbnails": [
+      "images/fidget001_1.jpg",
+      "images/fidget001_2.jpg"
+    ]
+  },
+  {
+    "id": "3",
+    "title": "Silicone Pacifier Set",
+    "description": "A set of soothing silicone pacifiers for infants.",
+    "code": "PACIFIER001",
+    "price": 7.49,
+    "status": true,
+    "stock": 30,
+    "category": "Pacifiers",
+    "thumbnails": [
+      "images/pacifier001_1.jpg",
+      "images/pacifier001_2.jpg"
+    ]
+  },
+  {
+    "id": "4",
+    "title": "Calming Lavender Scented Candle",
+    "description": "A lavender-scented candle for relaxation and stress relief.",
+    "code": "CANDLE001",
+    "price": 12.99,
+    "status": true,
+    "stock": 20,
+    "category": "Candles",
+    "thumbnails": [
+      "images/candle001_1.jpg",
+      "images/candle001_2.jpg"
+    ]
+  }
+]
