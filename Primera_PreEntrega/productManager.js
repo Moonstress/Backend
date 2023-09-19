@@ -1,42 +1,44 @@
-const fs = require('fs');
+import fs from 'fs'; 
 
 class ProductManager {
   constructor() {
     this.products = [];
-    this.filePath = 'products.json';
-    this.nextId = 1; // To auto-generate unique IDs
+    this.filePath = './products.json';
+    this.nextId = 1; // Initialize the ID to 1
     this.loadProductsFromFile(); // Load existing products when the class is instantiated
   }
+ 
 
-  // Load existing products from the JSON file (if it exists)
   loadProductsFromFile() {
     try {
       if (fs.existsSync(this.filePath)) {
         const data = fs.readFileSync(this.filePath, 'utf8');
         this.products = JSON.parse(data);
+        // Calculate the next ID based on existing products
+        this.nextId = Math.max(...this.products.map(product => product.id), 0) + 1;
       }
     } catch (error) {
       console.error('Error loading products:', error);
     }
   }
+  
 
-  // Save the products array to the JSON file
-  saveProductsToFile() {
-    try {
-      fs.writeFileSync(this.filePath, JSON.stringify(this.products, null, 2), 'utf8');
-    } catch (error) {
-      console.error('Error saving products:', error);
-    }
+// Save the products array to the JSON file
+saveProductsToFile() {
+  try {
+    fs.writeFileSync(this.filePath, JSON.stringify(this.products, null, 2), 'utf8');
+  } catch (error) {
+    console.error('Error saving products:', error);
   }
+}
 
-  // Add a new product
   addProduct(product) {
     // Generate a unique ID for the new product
     product.id = this.nextId++;
     this.products.push(product);
     this.saveProductsToFile();
   }
-
+  
   // Get all products
   getProducts() {
     return this.products;
@@ -47,16 +49,21 @@ class ProductManager {
     return this.products.find(product => product.id === id);
   }
 
-  // Update a product by its ID
   updateProduct(id, updatedFields) {
-    const product = this.getProductById(id);
-    if (product) {
-      // Merge the updated fields into the existing product
-      Object.assign(product, updatedFields);
+    const productIndex = this.products.findIndex(product => product.id === id);
+    if (productIndex !== -1) {
+      // Create a copy of the existing product
+      const updatedProduct = { ...this.products[productIndex] };
+      // Merge the updated fields into the copy
+      Object.assign(updatedProduct, updatedFields);
+      // Replace the existing product with the updated product
+      this.products[productIndex] = updatedProduct;
       this.saveProductsToFile();
+      return updatedProduct;
     }
-    return product;
+    return null; // Product not found
   }
+  
 
   // Delete a product by its ID
   deleteProduct(id) {
@@ -68,4 +75,4 @@ class ProductManager {
   }
 }
 
-module.exports = ProductManager;
+export default ProductManager;
