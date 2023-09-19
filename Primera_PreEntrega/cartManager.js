@@ -1,24 +1,28 @@
-import fs from 'fs'; 
+import fs from 'fs';
+import ProductManager from './productManager.js'; // 
 
 class CartManager {
-  constructor() {
+  constructor(productManager) {
     this.carts = [];
     this.cartFilePath = './carts.json'; // Path to the JSON file for carts
     this.nextCartId = 1; // Initialize the cart ID to 1
+    this.productManager = productManager; // Store the product manager instance
     this.loadCartsFromFile(); // Load existing carts when the class is instantiated
   }
 
-// Load existing carts from the JSON file (if it exists)
-loadCartsFromFile() {
-  try {
-    if (fs.existsSync(this.cartFilePath)) {
-      const data = fs.readFileSync(this.cartFilePath, 'utf8');
-      this.carts = JSON.parse(data);
+  loadCartsFromFile() {
+    try {
+      if (fs.existsSync(this.cartFilePath)) {
+        const data = fs.readFileSync(this.cartFilePath, 'utf8');
+        this.carts = JSON.parse(data);
+        // Calculate the next cart ID based on existing carts
+        this.nextCartId = Math.max(...this.carts.map(cart => cart.id), 0) + 1;
+      }
+    } catch (error) {
+      console.error('Error loading carts:', error);
     }
-  } catch (error) {
-    console.error('Error loading carts:', error);
   }
-}
+  
 
 // Save the carts array to the JSON file
 saveCartsToFile() {
@@ -28,22 +32,22 @@ saveCartsToFile() {
     console.error('Error saving carts:', error);
   }
 }
-  createCart(cart) {
-    cart.id = this.nextCartId++;
-    this.carts.push(cart);
-    this.saveCartsToFile();
-    return cart;
-  }
-  
 
-  // Get a shopping cart by its ID
+createCart(cart) {
+  cart.id = this.nextCartId++; // Increment the cart ID and assign it
+  this.carts.push(cart);
+  this.saveCartsToFile();
+  return cart;
+}
+
+    // Get a shopping cart by its ID
   getCartById(id) {
     return this.carts.find(cart => cart.id === id);
   }
 
   addProductToCart(cartId, productId, quantity = 1) {
     const cart = this.getCartById(cartId);
-    const product = productManager.getProductById(productId); // Retrieve the product details
+    const product = this.productManager.getProductById(productId);
   
     if (cart && product) {
       // Check if the product already exists in the cart
@@ -55,7 +59,7 @@ saveCartsToFile() {
         const newCartItem = {
           id: productId,
           quantity: quantity,
-          product: product // Store the product details in the cart item
+          product: { ...product }, // Store a copy of the product details in the cart item
         };
         cart.products.push(newCartItem);
       }
@@ -66,7 +70,6 @@ saveCartsToFile() {
   
     return null; // Cart or product not found
   }
-
-}
+}  
 
 export default CartManager;
