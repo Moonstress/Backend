@@ -41,23 +41,32 @@ saveCartsToFile() {
     return this.carts.find(cart => cart.id === id);
   }
 
-  // Add a product to a shopping cart
-  addProductToCart(cartId, product, quantity = 1) {
+  addProductToCart(cartId, productId, quantity = 1) {
     const cart = this.getCartById(cartId);
-    if (cart) {
+    const product = productManager.getProductById(productId); // Retrieve the product details
+  
+    if (cart && product) {
       // Check if the product already exists in the cart
-      const existingProduct = cart.products.find(p => p.id === product.id);
+      const existingProduct = cart.products.find(p => p.id === productId);
+  
       if (existingProduct) {
         existingProduct.quantity += quantity;
       } else {
-        product.quantity = quantity;
-        cart.products.push(product);
+        const newCartItem = {
+          id: productId,
+          quantity: quantity,
+          product: product // Store the product details in the cart item
+        };
+        cart.products.push(newCartItem);
       }
+  
       this.saveCartsToFile();
       return cart;
     }
-    return null;
+  
+    return null; // Cart or product not found
   }
+
 }
 
 export default CartManager;

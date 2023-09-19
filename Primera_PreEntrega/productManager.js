@@ -1,13 +1,11 @@
-import fs from 'fs'; 
+import fs from 'fs';
 
 class ProductManager {
   constructor() {
     this.products = [];
     this.filePath = './products.json';
-    this.nextId = 1; // Initialize the ID to 1
-    this.loadProductsFromFile(); // Load existing products when the class is instantiated
+    this.loadProductsFromFile();
   }
- 
 
   loadProductsFromFile() {
     try {
@@ -21,16 +19,14 @@ class ProductManager {
       console.error('Error loading products:', error);
     }
   }
-  
 
-// Save the products array to the JSON file
-saveProductsToFile() {
-  try {
-    fs.writeFileSync(this.filePath, JSON.stringify(this.products, null, 2), 'utf8');
-  } catch (error) {
-    console.error('Error saving products:', error);
+  saveProductsToFile() {
+    try {
+      fs.writeFileSync(this.filePath, JSON.stringify(this.products, null, 2), 'utf8');
+    } catch (error) {
+      console.error('Error saving products:', error);
+    }
   }
-}
 
   addProduct(product) {
     // Generate a unique ID for the new product
@@ -38,16 +34,20 @@ saveProductsToFile() {
     this.products.push(product);
     this.saveProductsToFile();
   }
-  
+   
   // Get all products
   getProducts() {
     return this.products;
   }
 
-  // Get a product by its ID
+
   getProductById(id) {
+    console.log('Searching for product with ID:', id);
+    console.log('Products array:', this.products);
+    
     return this.products.find(product => product.id === id);
   }
+  
 
   updateProduct(id, updatedFields) {
     const productIndex = this.products.findIndex(product => product.id === id);

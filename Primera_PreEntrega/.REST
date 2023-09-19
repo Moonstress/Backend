@@ -4,7 +4,7 @@ GET http://localhost:8080/api/products
 
 # Get Product by ID (Replace :pid with a valid product ID)
 ###
-GET http://localhost:8080/api/products/:pid
+GET http://localhost:8080/api/products/1
 
 # Add New Product
 ###
@@ -53,11 +53,10 @@ GET http://localhost:8080/api/carts/1
 
 ###
 # Add Product to Cart (Replace :cid and :pid with valid cart and product IDs)
-POST http://localhost:8080/api/carts/:cid/products/:pid
+POST http://localhost:8080/api/carts/1/products/1
 Content-Type: application/json
 
 {
-  "product": 1,
+  "productId": 1,
   "quantity": 2
 }
-
