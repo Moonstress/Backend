@@ -6,7 +6,7 @@ class CartManager {
     this.carts = [];
     this.cartFilePath = './carts.json'; // Path to the JSON file for carts
     this.nextCartId = 1; // Initialize the cart ID to 1
-    this.productManager = productManager; // Store the product manager instance
+    this.productManager = new productManager; // Store the product manager instance
     this.loadCartsFromFile(); // Load existing carts when the class is instantiated
   }
 
@@ -33,6 +33,10 @@ saveCartsToFile() {
   }
 }
 
+getCarts() {
+return this.carts;
+}
+
 createCart(cart) {
   cart.id = this.nextCartId++; // Increment the cart ID and assign it
   this.carts.push(cart);
@@ -45,7 +49,8 @@ createCart(cart) {
     return this.carts.find(cart => cart.id === id);
   }
 
-  addProductToCart(cartId, productId, quantity = 1) {
+  addProductToCart(cartId, productId, quantity = 1) { 
+    const id = productId = parseInt(productId.id, 10);
     const cart = this.getCartById(cartId);
     const product = this.productManager.getProductById(productId);
   
